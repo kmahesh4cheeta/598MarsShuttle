@@ -4,6 +4,9 @@ clear;
 clc;
 format short
 
+% Declare global variables
+global aT g;
+
 % Initial planet conditions
 Rp = 3396000;     % m
 g = 3.71;    % m/s
@@ -24,11 +27,12 @@ z0 = 130000;    % m
 Isp = 300;      % s
 T_desc = 519100; %15000;      % N
 T_asc = 5*T_desc;
-% psi0 = pi/2 + gamma0;
+T_vl = 1600;
+aT = 3*g;
 % aT = T0/m0;
 
 p_H = [Rp/1000;mu;alt_gw]; % Initial parameters for Hohmann transfers
-p_desc = [Rp;g;rho_ref;H;g0;m0;Cd;A_ref;L_D;z0;Isp;T_desc]; % Initial parameters for descent
+p_desc = [Rp;g;rho_ref;H;g0;m0;Cd;A_ref;L_D;z0;Isp;T_desc;T_vl]; % Initial parameters for descent
 p_asc = [T_asc;Isp;g;g0;rho_ref;H;Cd;A_ref];  % Initial parameters for ascent
 % p_H2 = [Rp/1000;mu;alt_gw];   % Initial parameters for Hohmann transfer 2
 
