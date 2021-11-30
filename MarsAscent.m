@@ -2,34 +2,8 @@
 
 function [t_asc,X_asc] = MarsAscent(X0,p) 
 
-% % Initial state
-% X0(1)
-% X0(2)
-% X0(3)
-% X0(4)
-
-% % Initial conditions
-% Cd = 0.5;
-% A_ref = 15.9;   % m^2
-% L_D = 1.07;
-% 
-% % Parameters
-% T_A = 519100;      % N
-% Isp = 300;      % s
-% g0 = 9.81;  % m/s^2
-% rho_ref = 0.02; % kg/m^3
-% H = 11100;  % m
-% g = 3.71;    % m/s
-% 
-% 
-% p = [T_A;Isp;g;g0;rho_ref;H;Cd;A_ref];
-% 
-% V0_A = 1;       % m/s
-% gamma0_A = 0;    % rad
-% m0_A = 2520;         % kg
-% z0 = 0;     % m
-% 
-% X0 = [V0_A;gamma0_A;m0_A;z0];
+% Change ascent gamma to +70 deg
+X0(2) = deg2rad(70);
 
 % Integrate EOMs
 tspan = [0 500];
@@ -55,9 +29,10 @@ end
 
 % EOMs for ascent 
 function X_dot = EOMsAscent(~,X0,p)
+    global aT;
     
     % Parse parameters
-    T = p(1);
+%     T = p(1);
     Isp = p(2);
     g = p(3);
     g0 = p(4);
@@ -76,10 +51,11 @@ function X_dot = EOMsAscent(~,X0,p)
     % Get beta & rho
     B = m/(Cd*A);
     rho = rho_ref*exp((-z)/H);
+    T = m*aT;
     
     % Diff eqns
-    V_dot = ((rho*V^2)/(2*B))-g*sin(gamma) + T/m;
-    gamma_dot = (g/V)*cos(gamma);
+    V_dot = -((rho*V^2)/(2*B))-g*sin(gamma) + T/m;
+    gamma_dot = -s(g/V)*cos(gamma);
     m_dot = -T/(g0*Isp);
     z_dot = V*sin(gamma);
     
