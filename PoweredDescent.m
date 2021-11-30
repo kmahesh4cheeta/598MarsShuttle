@@ -17,9 +17,10 @@ end
 
 % EOMs for powered descent
 function X_dot = EOMsPD(~,X0,p)
+    global aT;
     
     % Parse parameters
-    T = p(1);
+%     T = p(1);
     Isp = p(2);
     g = p(3);
     g0 = p(4);
@@ -35,9 +36,10 @@ function X_dot = EOMsPD(~,X0,p)
     z = X0(4);
 
 
-    % Get beta & rho
+    % Get beta, rho & T
     B = m/(Cd*A);
     rho = rho_ref*exp((-z)/H);
+    T = m*aT;
     
     % Diff eqns
     V_dot = -((rho*V^2)/(2*B))-g*sin(gamma) - T/m;
