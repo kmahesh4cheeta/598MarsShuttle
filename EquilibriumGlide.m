@@ -46,10 +46,9 @@ end
 
 % Events function to terminate integration at z = 0
 function [value,isterminal,direction] = AltLimit(t,X)
-    g_m = 3.71;    % m/s
-    aT = 1.5;
-    psi = 1.4312;
-    zi = ((-(X(1)^2)/g_m)/(8*(((aT/g_m)^2)-1)))*(3+4*(aT/g_m)*cos(psi)+cos(2*psi));
+    global aT g;
+    psi = X(2)+pi/2;
+    zi = ((-(X(1)^2)/g)/(8*(((aT/g)^2)-1)))*(3+4*(aT/g)*cos(psi)+cos(2*psi));
     value = (X(4) < zi);
     isterminal = 1;
     direction = +1;
