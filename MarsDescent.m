@@ -19,6 +19,7 @@ L_D = p(9);
 z0 = p(10);    % m
 Isp = p(11);      % s
 T0 = p(12);      % N
+T_vl = p(13);
 B0 = m0/(Cd*A_ref);
 
 % % Initial planet conditions
@@ -68,15 +69,8 @@ Xf_eg = [Vf_eg;gammaf_eg;mf_eg;zf_eg];
 
 %% STAGE 2: Powered Descent (from 10000 m to 10 m)
 
-% T_pd = 519100;      % N
-
 p_pd = [T0;Isp;g;g0;rho_ref;H;Cd;A_ref];
 
-% V0_pd = Vf_eg;       % m/s
-% gamma0_pd = gamma0;    % rad (from Hohmann transfer)
-% m0_pd = m0;         % kg
-% z0_pd = zf_eg;     % m
-% X0_pd = [V0_pd;gamma0_pd;m0_pd;z0_pd];
 X0_pd = Xf_eg;
 
 [t_pd,X_pd] = PoweredDescent(X0_pd,p_pd);
@@ -98,15 +92,10 @@ Xf_pd = [Vf_pd;gammaf_pd;mf_pd;zf_pd];
 
 %% STAGE 3: Vertical Landing (from 10 m to 0 m)
 
-T_vl = 15000;      % N
+% T_vl = 15000;      % N
 
-% p_vl = [T;Isp;g;g0;z_ref;rho_ref;H;Cd;A_ref];  % with drag force
 p_vl = [T_vl;Isp;g;g0];
 
-% V0_vl = Vf_pd;       % m/s
-% m0_vl = mf_pd;      % kg
-% z0_vl = zf_pd;     % m
-% X0_vl = [V0_vl;m0_vl;z0_pd];
 X0_vl = Xf_pd;
 
 [t_vl,X_vl] = VerticalLand(X0_vl,p_vl);
