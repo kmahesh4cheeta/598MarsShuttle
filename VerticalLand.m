@@ -53,7 +53,7 @@ end
     
     % Events function to terminate integration at z = 0
     function [value,isterminal,direction] = AltLimit(t,X)
-        value = (X(4) < 0);
+        value = X(4) - 0;
         isterminal = 1;
-        direction = +1;
+        direction = -1;
     end

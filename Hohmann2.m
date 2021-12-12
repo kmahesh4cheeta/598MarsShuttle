@@ -23,10 +23,10 @@ r1 = Rp + X(4)/1000; %316;    % km
 
 Vc1 = sqrt(mu/r1);  % velocity at atmos orbit (km/s)
 
-V = X(1);
+V = X(1)/1000;
 gamma = X(2);
 V0 = [V*cos(gamma);V*sin(gamma)];
-Vc0 = [0;Vc1];
+Vc0 = [Vc1;0];
 
 dV0_vec = Vc0-V0;
 dV0 = norm(dV0_vec);

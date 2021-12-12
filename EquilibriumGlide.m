@@ -3,11 +3,10 @@
 function [t_eg,X_eg] = EquilibriumGlide(X0,p)
 
 % Integrate EOMs
-tspan = [0 1300];
-opts = odeset('RelTol',1E-13,'AbsTol',1E-13,'Events',@AltLimit);
+tspan = [0:10:3000];
+opts = odeset('Events', @AltLimit);
 func = @(t,X) EOMsEG(t,X,p);
 [t,X] = ode45(func,tspan,X0,opts);
-
 
 t_eg = t;
 X_eg = X;
@@ -45,12 +44,20 @@ X_dot = [V_dot;gamma_dot;m_dot;z_dot];
 end
 
 % Events function to terminate integration at z = 0
-function [value,isterminal,direction] = AltLimit(t,X)
+function [value,isterminal,direction] = AltLimit(t,X,p)
     g_m = 3.71;    % m/s
-    aT = 1.5;
-    psi = 1.4312;
-    zi = ((-(X(1)^2)/g_m)/(8*(((aT/g_m)^2)-1)))*(3+4*(aT/g_m)*cos(psi)+cos(2*psi));
-    value = (X(4) < zi);
+    global aT;
+% %     aT = 1.5;
+% %     psi = X(2) + pi/2 ;
+    a = 1;
+    b = sin(X(2)) * (X(1) ^ 2) / (2 * g_m * X(4));
+    c = -(1 + (X(1)^ 2) * (1 + sin(X(2))^2) / (4 * g_m * X(4)) );
+    
+    D = sqrt(b^2 - 4*(a*c));
+    at_g = (D-b) * g_m/ (2 * a);
+%     zi = ((-(X(1)^2)/g_m)/(8*(((aT/g_m)^2)-1)))*(3+4*(aT/g_m)*cos(psi)+cos(2*psi));
+    
+    value =  (at_g - aT) * (X(4) < 20000);
     isterminal = 1;
-    direction = +1;
+    direction = 1;
 end

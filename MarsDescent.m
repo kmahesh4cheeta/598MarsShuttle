@@ -20,7 +20,8 @@ z0 = p(10);    % m
 Isp = p(11);      % s
 T0 = p(12);      % N
 B0 = m0/(Cd*A_ref);
-
+global aT;
+disp(["aT=", aT])
 % % Initial planet conditions
 % Rp = 3396000;     % m
 % g = 3.71;    % m/s
@@ -59,6 +60,20 @@ gamma_eg = X_eg(:,2);
 m_eg = X_eg(:,3);
 z_eg = X_eg(:,4);
 
+plot(V_eg, z_eg)
+figure(2)
+plot(V_eg, gamma_eg * 180 / pi)
+
+a = 1;
+b = sin(gamma_eg) .* (V_eg .^ 2) ./ (2 * g * z_eg);
+c = -(1 + (V_eg .^ 2) .* (1 + sin(gamma_eg).^2) ./ (4 * g * z_eg) );
+
+D = sqrt(b .^ 2 - 4 * (a .* c));
+at_g = (D - b) ./ (2 * a);
+
+figure(3)
+plot(z_eg, at_g)
+
 Vf_eg = V_eg(end);
 gammaf_eg = gamma_eg(end);
 mf_eg = m_eg(end);
@@ -96,6 +111,8 @@ zf_pd = z_pd(end);
 Xf_pd = [Vf_pd;gammaf_pd;mf_pd;zf_pd];
 
 
+
+
 %% STAGE 3: Vertical Landing (from 10 m to 0 m)
 
 T_vl = 15000;      % N
@@ -123,8 +140,8 @@ X0_vl = Xf_pd;
 % zf_vl = z_vl(end);
 % mf_vl = m_vl(end);
 
-t_desc = [t_eg;t_pd;t_vl];
-X_desc = [X_eg;X_pd;X_vl];
+t_desc = [t_eg;t_pd];
+X_desc = [X_eg;X_pd];
 
 end
 

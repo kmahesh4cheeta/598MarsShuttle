@@ -34,12 +34,22 @@ function [t_asc,X_asc] = MarsAscent(X0,p)
 % Integrate EOMs
 tspan = [0 500];
 % opts = odeset('RelTol',1E-13,'AbsTol',1E-13,'Events',@AltLimit);
-opts = odeset('Events',@AltLimit);
+opts = odeset('Events',@VelLimit);
 func = @(t,X) EOMsAscent(t,X,p);
 [t,X] = ode45(func,tspan,X0,opts);
 
 t_asc = t;
 X_asc = X;
+
+X1 = X(end, :)
+X1(2) = 70 * pi / 180;
+
+opts = odeset('Events',@AltLimit);
+func = @(t,X) EOMsAscent(t,X,p);
+[t,X] = ode45(func,tspan,X1,opts);
+
+t_asc = [t_asc;t];
+X_asc = [X_asc; X];
 
 % % Ascent trajectory
 % V_A = X_asc(:,1);
@@ -59,18 +69,22 @@ function X_dot = EOMsAscent(~,X0,p)
     % Parse parameters
     T = p(1);
     Isp = p(2);
-    g = p(3);
+    g_m = p(3);
+    Rp = 3396000;
+    
     g0 = p(4);
     rho_ref = p(5);
     H = p(6);
     Cd = p(7);
     A = p(8);
+    global aT;
     
     % Parse state vector
     V = X0(1);
     gamma = X0(2);
     m = X0(3);
     z = X0(4);
+    g = g_m * Rp^2 / (Rp + z)^2;
 
 
     % Get beta & rho
@@ -78,13 +92,19 @@ function X_dot = EOMsAscent(~,X0,p)
     rho = rho_ref*exp((-z)/H);
     
     % Diff eqns
-    V_dot = ((rho*V^2)/(2*B))-g*sin(gamma) + T/m;
-    gamma_dot = (g/V)*cos(gamma);
-    m_dot = -T/(g0*Isp);
+    V_dot = - g*sin(gamma) + T * aT;
+    gamma_dot = -(g/V)*cos(gamma) + (V/(Rp + z)) *cos(gamma);
+    m_dot = -m * T * aT/(g0*Isp);
     z_dot = V*sin(gamma);
     
     X_dot = [V_dot; gamma_dot; m_dot; z_dot];
 
+end
+
+function [value,isterminal,direction] = VelLimit(t,X)
+    value = X(1) - 60;
+    isterminal = 1;
+    direction = 1;
 end
 
 % Events function to terminate integration at z = 0
