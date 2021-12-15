@@ -29,12 +29,10 @@ T_desc = 519100; %15000;      % N
 T_asc = 5*T_desc;
 T_vl = 1600;
 aT = 3*g;
-% aT = T0/m0;
 
 p_H = [Rp/1000;mu;alt_gw]; % Initial parameters for Hohmann transfers
 p_desc = [Rp;g;rho_ref;H;g0;m0;Cd;A_ref;L_D;z0;Isp;T_desc;T_vl]; % Initial parameters for descent
 p_asc = [T_asc;Isp;g;g0;rho_ref;H;Cd;A_ref];  % Initial parameters for ascent
-% p_H2 = [Rp/1000;mu;alt_gw];   % Initial parameters for Hohmann transfer 2
 
 peri = (Rp/1000) + linspace(-220,120,5);  % km
 
@@ -42,38 +40,32 @@ for i = 1:length(peri)
 
 % Hohmann transfer to entry
 [entry] = Hohmann1(peri(i),p_H);
-
-ent_dV1 = entry(3);
-% ent_dV2 = ent_state(4);
-% ent_state(2) = sqrt(mu/((Rp+z0)/1000)); % km/s   % circular velocity at atmos orbit
 X0_desc = [entry(1);entry(2)];
+ent_dV1 = entry(3);
+% ent_dV2 = entry(4);   % if using circ. velocity at entry
 
 % Atmosphere Descent
 [t_desc,X_desc] = MarsDescent(X0_desc,p_desc);
-
 Xf_desc = X_desc(end,1:4);
-
 
 % Atmosphere Ascent
 [t_asc,X_asc] = MarsAscent(Xf_desc,p_asc);
 
 Xf_asc = X_asc(end,1:4);
-% [V_ex,gamma_ex] = Xf_asc(1:2);
+% [V_ex,gamma_ex] = Xf_asc(1:2);    % if exiting with non-zero gamma
 
-
-% Hohmann transfer to orbit
+% Hohmann transfer to gateway orbit
 [exit] = Hohmann2(Xf_asc,p_H);
-ex_dV0 = exit(1);   % dV to switch to circular orbit at top of atmosphere
-ex_dV1 = exit(2);   % dV from circular top of atmosphere to transfer orbit
-ex_dV2 = exit(3);   % dV from transfer orbit to gateway orbit
+ex_dV1 = exit(1);   % dV from circular top of atmosphere to transfer orbit
+ex_dV2 = exit(2);   % dV from transfer orbit to gateway orbit
+% ex_dV0 = exit(3);   % dV to switch to circular orbit at top of atmosphere
 
 save(sprintf('Periapsis_%4d.mat',round(peri(i))));
 
 end
 
-mf = Xf_asc(3)
+% Get mass fraction
+mf = Xf_asc(3);
+m_prop_frac = 1-(mf/m0);
 
-m_prop_frac = 1-(mf/m0)
 
-
-%% PLOTS
