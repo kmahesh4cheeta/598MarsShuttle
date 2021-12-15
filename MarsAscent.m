@@ -2,64 +2,28 @@
 
 function [t_asc,X_asc] = MarsAscent(X0,p) 
 
-% % Initial state
-% X0(1)
-% X0(2)
-% X0(3)
-% X0(4)
-
-% % Initial conditions
-% Cd = 0.5;
-% A_ref = 15.9;   % m^2
-% L_D = 1.07;
-% 
-% % Parameters
-% T_A = 519100;      % N
-% Isp = 300;      % s
-% g0 = 9.81;  % m/s^2
-% rho_ref = 0.02; % kg/m^3
-% H = 11100;  % m
-% g = 3.71;    % m/s
-% 
-% 
-% p = [T_A;Isp;g;g0;rho_ref;H;Cd;A_ref];
-% 
-% V0_A = 1;       % m/s
-% gamma0_A = 0;    % rad
-% m0_A = 2520;         % kg
-% z0 = 0;     % m
-% 
-% X0 = [V0_A;gamma0_A;m0_A;z0];
-
-% Integrate EOMs
+% Integrate EOMs for first stage (gamma=0)
 tspan = [0 1700];
-% opts = odeset('RelTol',1E-13,'AbsTol',1E-13,'Events',@AltLimit);
-opts = odeset('Events',@VelLimit);
+opts = odeset('RelTol',1E-13,'AbsTol',1E-13,'Events',@VelLimit);
 func = @(t,X) EOMsAscent(t,X,p);
 [t,X] = ode45(func,tspan,X0,opts);
 
-t_asc = t;
-X_asc = X;
+t_asc1 = t;
+X_asc1 = X;
 
+
+% Integrate EOMs for second stage (+gamma)
 X1 = X(end, :)
 X1(2) = 72 * pi / 180;
 
 opts = odeset('Events',@AltLimit);
 func = @(t,X) EOMsAscent(t,X,p);
-[t,X] = ode45(func,tspan,X1,opts);
+[t_asc2,X_asc2] = ode45(func,tspan,X1,opts);
 
-t_asc = [t_asc;t];
-X_asc = [X_asc; X];
 
-% % Ascent trajectory
-% V_A = X_asc(:,1);
-% m_A = X_asc(:,3);
-% z_A = X_asc(:,4);
-% 
-% % Ascent final values
-% Vf_asc = V_A(end);
-% zf_asc = z_A(end);
-% mf_asc = m_A(end);
+% Return total arrays
+t_asc = [t_asc1;t_asc2];
+X_asc = [X_asc1;X_asc2];
 
 end
 

@@ -41,14 +41,6 @@ VHa = sqrt(mu*((2/r2)-(1/aH)));     % velocity at apoapse of transfer orbit (km/
 dV1 = VHp - Vc1;    % dv from transfer orbit to atmos orbit (km/s)
 dV2 = Vc2 - VHa;    % dv from gateway orbit to transfer orbit (km/s)
 
-% % get gamma at atmos entry
-% rp = r1;
-% e = 1-(rp/aH);
-% re = Rp+130; % top of atmos (km)
-% 
-% f = acos((aH*(1-e^2)-re)/(e*re));   % rad
-% gamma_rad = -atan2((e*sin(f)),(1+e*cos(f))); % rad
-% % gamma_deg = rad2deg(gamma_rad);
 
 exit = [dV0;dV1;dV2];
 

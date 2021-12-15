@@ -47,15 +47,13 @@ end
 function [value,isterminal,direction] = AltLimit(t,X,p)
     g_m = 3.71;    % m/s
     global aT;
-% %     aT = 1.5;
-% %     psi = X(2) + pi/2 ;
+
     a = 1;
     b = sin(X(2)) * (X(1) ^ 2) / (2 * g_m * X(4));
     c = -(1 + (X(1)^ 2) * (1 + sin(X(2))^2) / (4 * g_m * X(4)) );
     
     D = sqrt(b^2 - 4*(a*c));
     at_g = (D-b) * g_m/ (2 * a);
-%     zi = ((-(X(1)^2)/g_m)/(8*(((aT/g_m)^2)-1)))*(3+4*(aT/g_m)*cos(psi)+cos(2*psi));
     
     value =  (at_g - aT) * (X(4) < 20000);
     isterminal = 1;

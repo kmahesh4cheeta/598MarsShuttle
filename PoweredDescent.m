@@ -5,14 +5,12 @@ function [t_pd,X_pd] = PoweredDescent(X0,p)
 
 % Integrate EOMs
 tspan = [0 30000];
-% opts = odeset('RelTol',1E-13,'AbsTol',1E-13,'Events',@AltLimit);
 opts = odeset('Events',@AltLimit);
 func = @(t,X) EOMsPD(t,X,p);
 [t,X] = ode45(func,tspan,X0,opts);
 
 t_pd = t;
 X_pd = X;
-
 
 end
 
@@ -29,12 +27,12 @@ function X_dot = EOMsPD(~,X0,p)
     Cd = p(7);
     A = p(8);
     global aT;
+    
     % Parse state vector
     V = X0(1);
     gamma = X0(2);
     m = X0(3);
     z = X0(4);
-
 
     % Get beta & rho
     B = m/(Cd*A);
