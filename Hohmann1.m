@@ -49,7 +49,7 @@ gamma_rad = -atan2((e*sin(f)),(1+e*cos(f))); % rad
 % end
 
 
-entry = [VHp;gamma_rad;dV1;dV2;Vc2];
+entry = [Vc2;gamma_rad;dV1;dV2];
 
 end
 

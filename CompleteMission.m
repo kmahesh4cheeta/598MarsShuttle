@@ -41,12 +41,15 @@ for i = 1:length(peri)
 
 % Hohmann transfer to entry
 [entry] = Hohmann1(peri(i),p_H);
-
+X0_desc = [entry(1)*1000;entry(2)];
 ent_dV1 = entry(3);
+ent_dV2 = entry(4);
+ent_dV_tot = ent_dV1+ent_dV2;
+
 % ent_dV2 = ent_state(4);
 % ent_state(2) = sqrt(mu/((Rp+z0)/1000)); % km/s   % circular velocity at atmos orbit
-X0_desc = [(entry(1) - entry(4)) * 1000;entry(2)];
-Vc_130 = entry(5);
+
+% Vc_130 = entry(5);
 
 % Atmosphere Descent
 [t_desc,X_desc] = MarsDescent(X0_desc,p_desc);
