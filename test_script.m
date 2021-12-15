@@ -2,7 +2,7 @@ vsp.VSPRenew();
 filename = 'testshuttle.vsp3';
 vsp.ReadVSPFile(filename);
 
-fuseid = FindGeomNamed('FuselageGeom');
+% fuseid = FindGeomNamed('FuselageGeom');
 
 % geomcell = vsp.FindGeomsWithName( 'Cone');
 % geomid = geomcell{1};
@@ -32,15 +32,15 @@ cfaref = [0,0,0];
 for i = 1:ngeom
 
 
-%     C = dgAeroForceMoment(alpha, degenGeom, i);
-    [K,H,Pmax,Pmin] = surfature(degenGeom(i).surf.x, degenGeom(i).surf.y, degenGeom(i).surf.z);
+    C = dgAeroForceMoment(alpha, degenGeom, i);
+%     [K,H,Pmax,Pmin] = surfature(degenGeom(i).surf.x, degenGeom(i).surf.y, degenGeom(i).surf.z);
     
     surf(degenGeom(i).surf.x, degenGeom(i).surf.y, degenGeom(i).surf.z, C.cp);
-%     aref = aref + C.aref;
-%     cdaref = cdaref + C.cd_aref;
-%     claref = claref + C.cl_aref;
-%     cmaref = cmaref + C.m;
-%     cfaref = cfaref + C.f;
+    aref = aref + C.aref;
+    cdaref = cdaref + C.cd_aref;
+    claref = claref + C.cl_aref;
+    cmaref = cmaref + C.m;
+    cfaref = cfaref + C.f;
     
 end
 colorbar

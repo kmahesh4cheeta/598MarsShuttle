@@ -32,7 +32,7 @@ function [t_asc,X_asc] = MarsAscent(X0,p)
 % X0 = [V0_A;gamma0_A;m0_A;z0];
 
 % Integrate EOMs
-tspan = [0 500];
+tspan = [0 1700];
 % opts = odeset('RelTol',1E-13,'AbsTol',1E-13,'Events',@AltLimit);
 opts = odeset('Events',@VelLimit);
 func = @(t,X) EOMsAscent(t,X,p);
@@ -42,7 +42,7 @@ t_asc = t;
 X_asc = X;
 
 X1 = X(end, :)
-X1(2) = 70 * pi / 180;
+X1(2) = 72 * pi / 180;
 
 opts = odeset('Events',@AltLimit);
 func = @(t,X) EOMsAscent(t,X,p);
@@ -86,7 +86,9 @@ function X_dot = EOMsAscent(~,X0,p)
     z = X0(4);
     g = g_m * Rp^2 / (Rp + z)^2;
 
-
+    if V > 3400 || z > 1.3e5
+        T = 0;
+    end
     % Get beta & rho
     B = m/(Cd*A);
     rho = rho_ref*exp((-z)/H);
@@ -102,14 +104,14 @@ function X_dot = EOMsAscent(~,X0,p)
 end
 
 function [value,isterminal,direction] = VelLimit(t,X)
-    value = X(1) - 60;
+    value = X(1) - 45;
     isterminal = 1;
     direction = 1;
 end
 
 % Events function to terminate integration at z = 0
 function [value,isterminal,direction] = AltLimit(t,X)
-    value = (X(4) > 130000);
+    value = X(2);
     isterminal = 1;
-    direction = +1;
+    direction = -1;
 end

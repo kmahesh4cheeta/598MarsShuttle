@@ -16,16 +16,16 @@ alt_gw = 316;    % km     % altitude of Mars gateway
 % Initial vehicle conditiond/parameters
 m_pl = 3000;  % kg   % mass of payload and structure
 m_prop = 12000; % kg    % mass of propellant only - after Hohmann1
-m0 = 55000; %m_pl + m_prop;      % kg
-Cd = 1.2;
-A_ref = 120;   % m^2
+m0 = 38000; %m_pl + m_prop;      % kg
+Cd = 1.1;
+A_ref = 152;   % m^2
 L_D = 0.5;
 z0 = 130000;    % m
-Isp = 340;      % s
+Isp = 360;      % s
 
 % psi0 = pi/2 + gamma0;
 global aT;
-aT = 3 * g;
+aT = 2.8 * g;
 T_desc = aT * m0; %15000;      % N
 T_asc_Tdesc = 1;
 
@@ -63,6 +63,8 @@ figure(4)
 plot(t_asc, X_asc(:,1))
 figure(5)
 plot(t_asc, X_asc(:,2))
+figure(6)
+plot(t_asc, X_asc(:,4))
 Xf_asc = X_asc(end,1:4);
 % [V_ex,gamma_ex] = Xf_asc(1:2);
 
@@ -75,7 +77,7 @@ ex_dV2 = exit(3);   % dV from transfer orbit to gateway orbit
 
 save(sprintf('Periapsis_%4d.mat',round(peri(i))));
 
-mf = Xf_asc(3);
+mf = Xf_asc(3) * exp(-1000 * (ex_dV0+ ex_dV1+ ex_dV2)/(g0 * Isp));
 
 m_prop_frac = 1-(mf/m0);
 propmassfrac = [propmassfrac m_prop_frac];

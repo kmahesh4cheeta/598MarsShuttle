@@ -7,6 +7,8 @@ function shuttle = AeroSetup(shuttle)
     wac = vsp.GetDoubleResults(res_id, 'Wet_Area');
     s_wet = sum(cell2mat(wac));
     shuttle.swet = s_wet;
+    fuse = FindGeomNamed('RearFuselage');
+    shuttle.rear_length = vsp.GetParmVal(fuse, 'Length', 'Design');
     filename = shuttle.vspfile;
     
     % fuseid = FindGeomNamed('FuselageGeom');
