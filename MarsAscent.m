@@ -55,7 +55,7 @@ function X_dot = EOMsAscent(~,X0,p)
     
     % Diff eqns
     V_dot = -((rho*V^2)/(2*B))-g*sin(gamma) + T/m;
-    gamma_dot = -s(g/V)*cos(gamma);
+    gamma_dot = -(g/V)*cos(gamma);
     m_dot = -T/(g0*Isp);
     z_dot = V*sin(gamma);
     

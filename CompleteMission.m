@@ -34,12 +34,14 @@ p_H = [Rp/1000;mu;alt_gw]; % Initial parameters for Hohmann transfers
 p_desc = [Rp;g;rho_ref;H;g0;m0;Cd;A_ref;L_D;z0;Isp;T_desc;T_vl]; % Initial parameters for descent
 p_asc = [T_asc;Isp;g;g0;rho_ref;H;Cd;A_ref];  % Initial parameters for ascent
 
-peri = (Rp/1000) + linspace(-220,120,5);  % km
+peri_range = (Rp/1000) + linspace(-220,120,5);  % km
 
-for i = 1:length(peri)
+for i = 1:length(peri_range)
+
+peri = peri_range(i);
 
 % Hohmann transfer to entry
-[entry] = Hohmann1(peri(i),p_H);
+[entry] = Hohmann1(peri,p_H);
 X0_desc = [entry(1);entry(2)];
 ent_dV1 = entry(3);
 % ent_dV2 = entry(4);   % if using circ. velocity at entry
@@ -60,7 +62,8 @@ ex_dV1 = exit(1);   % dV from circular top of atmosphere to transfer orbit
 ex_dV2 = exit(2);   % dV from transfer orbit to gateway orbit
 % ex_dV0 = exit(3);   % dV to switch to circular orbit at top of atmosphere
 
-save(sprintf('Periapsis_%4d.mat',round(peri(i))));
+% save(sprintf('Periapsis_%4d.mat',round(peri)));
+save(sprintf('Periapsis_%4d.mat',peri));
 
 end
 
