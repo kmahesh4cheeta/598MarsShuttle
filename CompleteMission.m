@@ -87,7 +87,8 @@ hold off;
 % Ascent alt/gamma
 ascGamma_alt = figure(4);
 plot(X_asc(:,2), X_asc(:,4),'LineWidth',1.5);
-ylim([-1000 130*1000]);
+xlim([0 90]);
+ylim([-1000 210*1000]);
 xlabel('\gamma ({\circ})','FontSize',12);
 ylabel('Altitude (m)','FontSize',12);
 set(gca, 'XDir','reverse');
