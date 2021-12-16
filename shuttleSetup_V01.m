@@ -10,7 +10,7 @@ function shuttle = shuttleSetup_V01()
     shuttle.at = 2.8 * mars_g;
     shuttle.n_eng = 3;
     shuttle.t_w = shuttle.at;
-    shuttle.engine_t_w = 240;
+    shuttle.engine_t_w = 2400;
     % Initialize parameters for Weight Estimations, some guesses
 
     shuttle.weight = struct;
