@@ -1,0 +1,55 @@
+...Comp Geom...
+8 Num Comps
+22 Total Num Meshes
+85864 Total Num Tris
+
+Theo_Area   Wet_Area   Theo_Vol    Wet_Vol  Name
+  262.156    253.956    209.590    208.971  FrontFuselage  
+   26.112      1.339      9.197      0.485  CabinConform   
+    1.104      0.000      0.083      0.000  SeatGroup      
+    1.219      0.000      0.047      0.000  SeatGroup      
+    1.104      0.000      0.083      0.000  SeatGroup      
+    1.219      0.000      0.047      0.000  SeatGroup      
+    0.213      0.000      0.009      0.000  PodMan         
+    0.837      0.000      0.052      0.000  PodMan         
+    0.125      0.000      0.003      0.000  PodMan         
+    0.093      0.000      0.002      0.000  PodMan         
+    0.125      0.000      0.003      0.000  PodMan         
+    0.093      0.000      0.002      0.000  PodMan         
+    0.186      0.000      0.006      0.000  PodMan         
+    0.153      0.000      0.004      0.000  PodMan         
+    0.186      0.000      0.006      0.000  PodMan         
+    0.153      0.000      0.004      0.000  PodMan         
+   39.955      0.000     17.660      0.000  FuelTank       
+   58.893     52.910      6.519      6.028  WingGeom       
+   58.893     52.910      6.519      6.028  WingGeom       
+   39.955      0.000     17.660      0.000  OxTank1        
+   39.955      0.000     17.660      0.000  OxTank1        
+-------------------------------------------------
+  532.728    361.115    285.153    221.513  Totals         
+
+Tag_Theo_Area   Tag_Wet_Area    Tag_Name
+       70.065         68.737    FrontFuselage_Surf0
+       26.112          1.339    CabinConform_Surf0
+        1.104          0.000    SeatGroup_Surf0
+        1.219          0.000    SeatGroup_Surf1
+        1.104          0.000    SeatGroup_Surf2
+        1.219          0.000    SeatGroup_Surf3
+        0.213          0.000    PodMan_Surf0   
+        0.837          0.000    PodMan_Surf1   
+        0.125          0.000    PodMan_Surf2   
+        0.093          0.000    PodMan_Surf3   
+        0.125          0.000    PodMan_Surf4   
+        0.093          0.000    PodMan_Surf5   
+        0.186          0.000    PodMan_Surf6   
+        0.153          0.000    PodMan_Surf7   
+        0.186          0.000    PodMan_Surf8   
+        0.153          0.000    PodMan_Surf9   
+      192.091        185.219    RearFuselage_Surf0
+       39.955          0.000    FuelTank_Surf0 
+       58.893         52.910    WingGeom_Surf0 
+       58.893         52.910    WingGeom_Surf1 
+       39.955          0.000    OxTank1_Surf0  
+       39.955          0.000    OxTank1_Surf1  
+WARNING: 1 open meshes merged
+     Merged: RearFuselage

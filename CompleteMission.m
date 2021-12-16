@@ -25,7 +25,7 @@ z0 = 130000;    % m
 Isp = 360;      % s
 
 global aT;
-% aT = 2.8 * g;
+aT = 2.8 * g;
 T_desc = aT * m0;     % N
 T_asc_Tdesc = 1;
 
@@ -78,25 +78,30 @@ m_prop_frac = 1-(mf/m0);
 
 % Descent alt/vel
 descV_alt = figure(2);
-plot(X_desc(:,1), X_desc(:,4));
-xlabel('aT/g');
-ylabel('Altitude (m)');
+plot(X_desc(:,1), X_desc(:,4),'LineWidth',1.5);
+xlabel('Velocity (m/s)','FontSize',12);
+ylabel('Altitude (m)','FontSize',12);
 
 % Ascent alt/vel
 ascV_alt = figure(3);
-plot(X_asc(:,1), X_asc(:,4));
-xlabel('Velocity (m/s)');
-ylabel('Altitude (m)');
+plot(X_asc(:,1), X_asc(:,4),'LineWidth',1.5);
+xlabel('Velocity (m/s)','FontSize',12);
+ylabel('Altitude (m)','FontSize',12);
 
 % Ascent alt/gamma
 ascGamma_alt = figure(4);
-plot(X_asc(:,2), X_asc(:,4));
-xlabel('\gamma (^{\circ})');
-ylabel('Altitude (m)');
+plot(X_asc(:,2), X_asc(:,4),'LineWidth',1.5);
+xlabel('\gamma ({\circ})','FontSize',12);
+ylabel('Altitude (m)','FontSize',12);
 
 % Ascent m/t
 ascM_t = figure(5);
-plot(t_asc, X_asc(:,3));
-xlabel('Time (s)');
-ylabel('Mass (kg)');
+plot(t_asc, X_asc(:,3),'LineWidth',1.5);
+xlabel('Time (s)','FontSize',12);
+ylabel('Mass (kg)','FontSize',12);
 
+% Save figures
+print(descV_alt,'descV_alt.png','-dpng','-r100');
+print(ascV_alt,'ascV_alt.png','-dpng','-r100');
+print(ascGamma_alt,'ascGamma_alt.png','-dpng','-r100');
+print(ascM_t,'ascM_t.png','-dpng','-r100');

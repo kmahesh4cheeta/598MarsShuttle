@@ -79,9 +79,12 @@ X_desc = [X_eg;X_pd];
 
 % aT/g vs. alt
 aTg_alt = figure(1);
-plot(z_eg, at_g);
-xlabel('aT/g');
-ylabel('Altitude (m)');
+plot( at_g,z_eg,'LineWidth',1.5);
+xlabel('a_T / g','FontSize',12);
+ylabel('Altitude (m)','FontSize',12);
+
+% save plot
+print(aTg_alt,'aTg_alt.png','-dpng','-r100');
 
 
 end

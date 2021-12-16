@@ -30,10 +30,16 @@ function shuttle = shuttleSetup_V01()
     shuttle.prop.r_tank = sqrt(3) * 0.9;
     shuttle.prop.m_v_tank = 12.0;
     
-    %% Plot
-    
+%% Plot
+
 % L/D & Cd vs. alpha
-LDcd_alpha = figure(6);
-% plot(t_asc, X_asc(:,3));
-% xlabel('Time (s)');
-% ylabel('Mass (kg)');
+LDcd_alpha = figure(6); clf;
+plot(rad2deg(shuttle.alpharange), ppval(shuttle.cd, shuttle.alpharange),'LineWidth',1.5,'DisplayName','C_D');
+hold on;
+plot(rad2deg(shuttle.alpharange), ppval(shuttle.l_d, shuttle.alpharange),'LineWidth',1.5,'DisplayName','L/D');
+xlabel('\alpha ({\circ})','FontSize',12);
+legend('Location','southeast');
+hold off;
+
+% save plot
+print(LDcd_alpha,'LDcd_alpha.png','-dpng','-r100');
