@@ -52,13 +52,7 @@ Xi_asc(2) = pi/2;
 % Atmosphere Ascent
 [t_asc,X_asc] = MarsAscent(Xi_asc,p_asc);
 Xf_asc = X_asc(end,1:4);
-
-% figure(4)
-% plot(t_asc, X_asc(:,1))
-% figure(5)
-% plot(t_asc, X_asc(:,2))
-% figure(6)
-% plot(t_asc, X_asc(:,4))
+X_asc(:,2) = rad2deg(X_asc(:,2));
 
 
 % Hohmann transfer to orbit
@@ -81,24 +75,30 @@ descV_alt = figure(2);
 plot(X_desc(:,1), X_desc(:,4),'LineWidth',1.5);
 xlabel('Velocity (m/s)','FontSize',12);
 ylabel('Altitude (m)','FontSize',12);
+hold off;
 
 % Ascent alt/vel
 ascV_alt = figure(3);
 plot(X_asc(:,1), X_asc(:,4),'LineWidth',1.5);
 xlabel('Velocity (m/s)','FontSize',12);
 ylabel('Altitude (m)','FontSize',12);
+hold off;
 
 % Ascent alt/gamma
 ascGamma_alt = figure(4);
 plot(X_asc(:,2), X_asc(:,4),'LineWidth',1.5);
+ylim([-1000 130*1000]);
 xlabel('\gamma ({\circ})','FontSize',12);
 ylabel('Altitude (m)','FontSize',12);
+set(gca, 'XDir','reverse');
+hold off;
 
 % Ascent m/t
 ascM_t = figure(5);
 plot(t_asc, X_asc(:,3),'LineWidth',1.5);
 xlabel('Time (s)','FontSize',12);
 ylabel('Mass (kg)','FontSize',12);
+hold off;
 
 % Save figures
 print(descV_alt,'descV_alt.png','-dpng','-r100');

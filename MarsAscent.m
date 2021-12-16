@@ -14,7 +14,7 @@ X_asc1 = X;
 
 % Integrate EOMs for second stage (+gamma)
 X1 = X(end, :)
-X1(2) = 72 * pi / 180;
+X1(2) = deg2rad(72);
 
 opts = odeset('Events',@AltLimit);
 func = @(t,X) EOMsAscent(t,X,p);
